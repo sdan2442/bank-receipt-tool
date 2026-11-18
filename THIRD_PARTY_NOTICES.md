@@ -10,7 +10,7 @@
 | PaddleOCR | 3.3.2 | Apache-2.0 | https://github.com/PaddlePaddle/PaddleOCR/tree/v3.3.2 |
 | PaddleX | 3.3.13 | Apache-2.0 | https://github.com/PaddlePaddle/PaddleX |
 | PP-OCRv5 检测、识别模型 | server / mobile | Apache-2.0 | https://github.com/PaddlePaddle/PaddleOCR |
-| PyMuPDF / MuPDF | 1.26.4 / 构建内附版本 | AGPL-3.0 | https://github.com/pymupdf/PyMuPDF/tree/1.26.4 |
+| PyMuPDF / MuPDF | 1.26.4 / 1.26.7 | AGPL-3.0 | https://github.com/pymupdf/PyMuPDF/tree/1.26.4 |
 | PySide6 / Shiboken / Qt | 6.9.2 | LGPL-3.0 / GPL-3.0，详见组件说明 | https://download.qt.io/official_releases/QtForPython/pyside6/ |
 | pypdf | 6.1.1 | BSD-3-Clause | https://github.com/py-pdf/pypdf |
 | OpenCV Python | 见本次环境清单 | Apache-2.0，另含原生依赖许可 | https://github.com/opencv/opencv-python |
@@ -22,19 +22,21 @@
 
 `scripts/collect_licenses.py` 从本次构建环境逐个收集包发行文件中附带的 LICENSE、COPYING、NOTICE、版权文件，并记录版本和 SHA-256。清单位于 `licenses/third_party_manifest.json`，原始许可文本位于 `licenses/third_party/`。
 
-该清单覆盖构建环境，也包含开发工具及间接依赖。包元数据中的许可名按原样记录。发行版中原生 DLL 及其子依赖的许可，仍需要结合发行包和上游源码核对。
+该清单覆盖构建环境，也包含开发工具及间接依赖。包元数据中的许可名按原样记录。原生依赖的许可文本也保留在相应包目录中，例如 GEOS、PDFium、FreeType、OpenBLAS。bce-python-sdk 的包元数据未附独立许可文本，其 Apache-2.0 全文参见 `licenses/Apache-2.0.txt`。
 
 ## 取得对应源码
 
 - 应用对应源码和配置在本仓库，开发及打包方法见 README。
-- PyMuPDF 1.26.4 官方源码包入口为 https://pypi.org/project/PyMuPDF/1.26.4/#files 。其源码发行包包含用于构建的 MuPDF 源码归档。
+- PyMuPDF 1.26.4 官方源码包入口为 https://pypi.org/project/PyMuPDF/1.26.4/#files 。MuPDF 1.26.7 源码单独提供于同次发行的第三方源码附件。
 - Qt 6.9.2 官方源码位于 https://download.qt.io/archive/qt/6.9/6.9.2/ 。
 - Qt for Python / Shiboken 6.9.2 源码位于 https://download.qt.io/official_releases/QtForPython/pyside6/PySide6-6.9.2-src/ 。
 
-发布包含二进制依赖的离线 EXE 时，应同步提供对应源码取得方式、许可文件和版本信息。依据具体许可要求，需要由发行者提供的对应源码应随发行附件提供。第三方上游网址用于定位版本，发布者仍须履行适用的源码提供义务。
+本次对应源码的发行附件、固定版本上游地址、校验值和构建入口见 [SOURCE_CODE.md](SOURCE_CODE.md) 与 `licenses/upstream_sources.json`。应用与第三方库未作闭源修改。
 
 Qt DLL 保持独立文件，以便使用者替换兼容版本。程序未加入限制替换库或调试修改版本的机制。
 
-## 公开发行状态
+## 二进制发行说明
 
-当前准备公开的是应用源码。离线程序包须在第三方原生依赖、许可文本及对应源码发行材料核对完成后单独发布到 Release。将本文件加入原有 ZIP 并不能代表该二进制包的全部发行要求已核对完成。
+Windows 离线包随附许可文本和源码取得说明。Qt 及其他共享库保持独立文件，使用者可按各自许可调试、修改和替换兼容版本。
+
+构建环境同时安装 OpenCV contrib 4.10.0.84 与 headless 4.12.0.88，实际 `cv2` 为 4.10.0。公开包不分发未使用的 `opencv_videoio_ffmpeg*.dll` 视频插件，保留静态图像读写功能。可参考 [OpenCV 官方分发说明](https://github.com/opencv/opencv/blob/4.10.0/3rdparty/ffmpeg/readme.txt)。

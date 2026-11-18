@@ -2,13 +2,25 @@
 
 这是一个面向 Windows 10/11（64 位）的本地离线桌面工具。扫描件、文件名、OCR 文本、坐标、处理记录和日志不会上传；程序未接入任何云 OCR、云 API 或远程大模型。
 
-## 公开源码预览
+## Windows 下载与使用
+
+**普通使用者无需安装 Python，无需另外下载 OCR 模型。**
+
+1. 打开 [Windows 离线包下载页](https://github.com/sdan2442/bank-receipt-tool/releases/tag/v0.3.10-preview)。
+2. 在 Assets 中下载 `BankReceiptTool_v0.3.10_windows_x64.zip`。`source`、`ThirdPartySources`、`qt-everywhere-src` 是供开发者查阅的源码附件，使用程序无需下载。
+3. 将 ZIP 完整解压到所有父目录均为英文或数字的路径，例如 `D:\BankReceiptTool_v0_3_10`。不要在压缩包内直接运行。
+4. 双击 `银行回单工具.exe`，保留同目录的 `_internal` 文件夹。首次启动也可离线使用。
+5. 使用方法见 [中文使用说明](README_使用说明.md)。默认结果保存到桌面的“银行回单处理结果”。
+
+Windows 包包含 Python 运行环境、四个本地 PP-OCRv5 模型、配置和运行库。下载页同时提供 SHA-256 校验值。程序尚未进行代码签名。
+
+## 公开测试版
 
 当前应用版本为 v0.3.10，默认使用双 mobile 模型，结果进入人工复核。上下布局发票的购买方标签被拆字时可能留空，详情见 RELEASE_NOTES.md。
 
 源码以 AGPL-3.0 发布，第三方组件按各自许可证使用。安装与模型下载在开发准备阶段进行，应用处理业务单据时使用本地模型。许可证全文见 LICENSE，依赖清单和对应源码说明见 THIRD_PARTY_NOTICES.md。
 
-公开仓库提供应用源码。含运行库和模型的 Windows 离线包将在二进制依赖的许可与对应源码材料核对完成后通过 Release 发布。
+本仓库提供应用源码，Release 提供 Windows 离线程序、应用源码和第三方源码附件。源码获取及构建说明见 [SOURCE_CODE.md](SOURCE_CODE.md)。历史单据、OCR 结果、日志、断点和个人配置未纳入发布包。
 
 ## 已实现
 
@@ -35,7 +47,9 @@
 - 输出先写临时文件再原子改名；永不覆盖同名文件，自动追加 `_02`；默认不移动、不修改原文件。
 - 待复核 PDF 附带本地 JSON（OCR 全文、坐标、置信度和候选值）；日志对长账号和身份证号脱敏。
 
-## 安装（开发环境）
+## 从源码运行（仅开发者需要）
+
+以下步骤适用于修改代码和自行打包。直接使用 Windows 离线包时跳过本节。
 
 需要已安装 64 位 Python 3.11，然后在 PowerShell 中执行：
 
@@ -49,7 +63,7 @@ Set-ExecutionPolicy -Scope Process Bypass
 
 ## 离线模型
 
-统一位置：`models/`。程序启动时检查 `inference.json`（或旧格式 `inference.pdmodel`）与 `inference.pdiparams`，缺失时直接报错，不会触发在线下载。
+源码运行时统一位置为 `models/`，Windows 离线包内为 `_internal/models/`，已随 ZIP 提供。程序启动时检查 `inference.json`（或旧格式 `inference.pdmodel`）与 `inference.pdiparams`，缺失时直接报错，不会触发在线下载。
 
 | 名称 | 用途 | 发布系列 | 官方来源 | 许可证 |
 |---|---|---|---|---|

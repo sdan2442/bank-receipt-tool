@@ -13,7 +13,7 @@ from privacy_audit import audit
 ROOT = Path(__file__).resolve().parents[1]
 FILES = (
     ".gitignore", "LICENSE", "NOTICE", "README.md", "README_使用说明.md",
-    "THIRD_PARTY_NOTICES.md", "RELEASE_NOTES.md", "PUBLIC_RELEASE_CHECKLIST.md",
+    "THIRD_PARTY_NOTICES.md", "RELEASE_NOTES.md", "SOURCE_CODE.md", "PUBLIC_RELEASE_CHECKLIST.md",
     "BankReceiptTool.spec", "build.ps1", "setup.ps1", "run.ps1", "run.py",
     "pyproject.toml", "requirements.txt", "requirements-dev.txt",
 )

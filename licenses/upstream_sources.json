@@ -1,0 +1,96 @@
+{
+  "format": 1,
+  "release_tag": "v0.3.10-preview",
+  "archives": [
+    {
+      "component": "PyMuPDF",
+      "version": "1.26.4",
+      "filename": "pymupdf-1.26.4.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/90/35/031556dfc0d332d8e9ed9b61ca105138606d3f8971b9eb02e20118629334/pymupdf-1.26.4.tar.gz",
+      "size": 83077563,
+      "sha256": "be13a066d42bfaed343a488168656637c4d9843ddc63b768dc827c9dfc6b9989",
+      "verification": "upstream published SHA-256"
+    },
+    {
+      "component": "MuPDF",
+      "version": "1.26.7",
+      "filename": "mupdf-1.26.7-source.tar.gz",
+      "url": "https://mupdf.com/downloads/archive/mupdf-1.26.7-source.tar.gz",
+      "size": 64529748,
+      "sha256": "52014fcecac48ae3ead947eb90572ff7da9acf9550711675872944e8ef8c4966",
+      "verification": "official HTTPS download + readable source tar; locally calculated SHA-256"
+    },
+    {
+      "component": "Qt",
+      "version": "6.9.2",
+      "filename": "qt-everywhere-src-6.9.2.tar.xz",
+      "url": "https://download.qt.io/archive/qt/6.9/6.9.2/single/qt-everywhere-src-6.9.2.tar.xz",
+      "size": 1102604088,
+      "sha256": "643f1fe35a739e2bf5e1a092cfe83dbee61ff6683684e957351c599767ca279c",
+      "verification": "upstream published SHA-256"
+    },
+    {
+      "component": "PySide6 / Shiboken",
+      "version": "6.9.2",
+      "filename": "pyside-setup-everywhere-src-6.9.2.tar.xz",
+      "url": "https://download.qt.io/official_releases/QtForPython/pyside6/PySide6-6.9.2-src/pyside-setup-everywhere-src-6.9.2.tar.xz",
+      "size": 16659400,
+      "sha256": "9ec087465342bdc9dbe492a30e58fdbbc5448655deacf5982a0fe7123f59222d",
+      "verification": "upstream published SHA-256"
+    },
+    {
+      "component": "GEOS",
+      "version": "3.13.1",
+      "filename": "geos-3.13.1.tar.bz2",
+      "url": "https://download.osgeo.org/geos/geos-3.13.1.tar.bz2",
+      "size": 6839955,
+      "sha256": "df2c50503295f325e7c8d7b783aca8ba4773919cde984193850cf9e361dfd28c",
+      "verification": "official HTTPS download + readable source tar; locally calculated SHA-256"
+    },
+    {
+      "component": "Shapely",
+      "version": "2.1.2",
+      "filename": "shapely-2.1.2.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/4d/bc/0989043118a27cccb4e906a46b7565ce36ca7b57f5a18b78f4f1b0f72d9d/shapely-2.1.2.tar.gz",
+      "size": 315489,
+      "sha256": "2ed4ecb28320a433db18a5bf029986aa8afcfd740745e78847e330d5d94922a9",
+      "verification": "upstream published SHA-256"
+    },
+    {
+      "component": "crc32c",
+      "version": "2.9",
+      "filename": "crc32c-2.9.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/b8/2a/1b7eadbd3c858204a90406a2a1e0dccd1592f69b77ec278a202fa325c50f/crc32c-2.9.tar.gz",
+      "size": 48240,
+      "sha256": "d6d2ae0299a417e5fb2e3641838cec34a23778a62fb4ce928792366476c1983b",
+      "verification": "upstream published SHA-256"
+    },
+    {
+      "component": "python-bidi",
+      "version": "0.6.11",
+      "filename": "python_bidi-0.6.11.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/ce/e7/f168f2c3151aa05b9f9c9b2f7767bc8e06a133ea822c231ab497d4f36833/python_bidi-0.6.11.tar.gz",
+      "size": 57647,
+      "sha256": "034090c597af250d699299d7e7f1e83eb016f9e47b3b707bd89ab2bdec77bce0",
+      "verification": "upstream published SHA-256"
+    },
+    {
+      "component": "certifi",
+      "version": "2026.7.22",
+      "filename": "certifi-2026.7.22.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/a3/c2/24167ea9858356b47a87a50d39908bfdb72ceeefe0041586e704e5376b3a/certifi-2026.7.22.tar.gz",
+      "size": 138112,
+      "sha256": "741e2c3b351ddf169a738da9f2c048608ff7f2c5cc02f1ebc6b118bb090d5d55",
+      "verification": "upstream published SHA-256"
+    },
+    {
+      "component": "tqdm",
+      "version": "4.70.0",
+      "filename": "tqdm-4.70.0.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/21/3b/6c24bec5be5e743ffd99576daa5cc077722fc7d5bbc00bd133fa0c698dc6/tqdm-4.70.0.tar.gz",
+      "size": 795438,
+      "sha256": "55b0b0dbd97462d06ebee91e4dac24ed4d4702be82b24f07e6c1d27e08cea220",
+      "verification": "upstream published SHA-256"
+    }
+  ]
+}

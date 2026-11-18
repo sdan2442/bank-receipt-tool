@@ -22,6 +22,10 @@ for dist_name in ('imagesize', 'opencv-contrib-python', 'pyclipper', 'pypdfium2'
 a = Analysis([str(root / 'run.py')], pathex=[str(root)], binaries=binaries, datas=datas,
     hiddenimports=['paddleocr', 'paddle', 'paddlex', 'yaml', 'openpyxl'], excludes=[], noarchive=False)
 pyz = PYZ(a.pure)
+# Static PDF/image processing does not use OpenCV's optional FFmpeg plugins.
+# Keep their video-only DLLs out of public builds (OpenCV upstream readme.txt).
+a.binaries = [entry for entry in a.binaries
+              if not Path(entry[0]).name.lower().startswith('opencv_videoio_ffmpeg')]
 exe = EXE(pyz, a.scripts, [], exclude_binaries=True, name='银行回单工具', debug=False,
     bootloader_ignore_signals=False, strip=False, upx=False, console=False)
 coll = COLLECT(exe, a.binaries, a.datas, strip=False, upx=False, name='BankReceiptTool_v0_3_10')

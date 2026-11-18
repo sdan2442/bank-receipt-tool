@@ -1,0 +1,11 @@
+paddlepaddle==3.2.2
+paddleocr==3.3.2
+PyMuPDF==1.26.4
+pypdf==6.1.1
+opencv-python-headless==4.12.0.88
+Pillow==11.3.0
+PySide6==6.9.2
+PyYAML==6.0.2
+openpyxl==3.1.5
+cn2an==0.5.23
+

@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bank-receipt-tool"
+version = "0.3.10"
+description = "Windows offline bank receipt splitter, OCR and reviewer"
+license = {file = "LICENSE"}
+requires-python = ">=3.10,<3.12"
+dependencies = [
+  "paddlepaddle==3.2.2",
+  "paddleocr==3.3.2",
+  "PyMuPDF==1.26.4",
+  "pypdf==6.1.1",
+  "opencv-python-headless==4.12.0.88",
+  "Pillow==11.3.0",
+  "PySide6==6.9.2",
+  "PyYAML==6.0.2",
+  "openpyxl==3.1.5",
+  "cn2an==0.5.23",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==8.4.2", "pytest-cov==7.0.0", "pyinstaller==6.16.0"]
+
+[project.scripts]
+bank-receipt-tool = "bank_receipt_tool.app:main"
+
+[tool.setuptools.packages.find]
+include = ["bank_receipt_tool*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

@@ -1,0 +1,46 @@
+# Local Python/runtime environments
+.venv/
+.python311/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.cache/
+
+# Build products and private snapshots
+build/
+dist/
+snapshots/
+release/
+
+# Bundled models are distributed only inside the verified binary release asset
+models/
+
+# Runtime output, checkpoints, OCR audits and temporary work
+output/
+success/
+review/
+failed/
+logs/
+.jobs/
+.work/
+processing_results.xlsx
+*.log
+*.tmp.*
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Never commit bank documents or rendered pages. Public sample data must be
+# synthetic and intentionally added under sample_data after manual review.
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.tif
+*.tiff
+*.bmp
+*.xlsx
+*.xls
+*.csv

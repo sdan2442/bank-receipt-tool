@@ -1,0 +1,13 @@
+Bank Receipt Tool
+Copyright 2026 Bank Receipt Tool contributors.
+
+The project application is distributed under GNU AGPL version 3.
+See LICENSE for the full terms.
+
+Earlier local snapshots carried an Apache-2.0 notice. That notice is retained
+in licenses/legacy/Apache-2.0-original-notice.txt, with the Apache-2.0 text in
+licenses/Apache-2.0.txt. This public distribution includes PyMuPDF/MuPDF under
+their AGPL option. Third-party components retain their own copyrights and terms.
+
+See THIRD_PARTY_NOTICES.md and licenses/third_party_manifest.json for the
+component inventory, upstream sources and license files.

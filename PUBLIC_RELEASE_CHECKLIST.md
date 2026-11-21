@@ -15,13 +15,13 @@
 
 ## Windows 可运行版本
 
-公开发布时上传整个 `dist\BankReceiptTool_v0_3_10` 目录生成的压缩包。该目录包含模型和运行库，用户可完整解压后离线运行。
+公开发布时上传整个 `dist\BankReceiptTool_v0_3_11` 目录生成的压缩包。该目录包含模型和运行库，用户可完整解压后离线运行。
 
 压缩前执行：
 
 ```powershell
-.\.venv\Scripts\python.exe scripts\privacy_audit.py --binary .\dist\BankReceiptTool_v0_3_10
-Get-FileHash .\dist\BankReceiptTool_v0_3_10\银行回单工具.exe -Algorithm SHA256
+.\.venv\Scripts\python.exe scripts\privacy_audit.py --binary .\dist\BankReceiptTool_v0_3_11
+Get-FileHash .\dist\BankReceiptTool_v0_3_11\银行回单工具.exe -Algorithm SHA256
 ```
 
 不要把开发目录中的 `models/`、任何输出目录或历史任务目录手动复制进发布包。发布说明应列出 SHA-256、Windows 10/11 x64、CPU 模式、离线运行说明和 Paddle/PaddleOCR 许可证来源。

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+import math
 from pathlib import Path
 
 import cv2
@@ -102,22 +103,103 @@ def detect_orientation(image: np.ndarray) -> int:
     return 90 if vertical > horizontal * 1.25 and vertical > 200 else 0
 
 
+def _text_skew_angle(image: np.ndarray) -> float | None:
+    """Return a clockwise text-baseline angle only with multi-row consensus.
+
+    The envelope of *all* page ink is not a baseline: stamps, handwritten page
+    numbers and scanner specks can tilt it even when every text row is level.
+    Work at a bounded resolution and vote using local, word-shaped text runs.
+    No OCR/model inference is needed for this check.
+    """
+    h, w = image.shape[:2]
+    scale = min(1.0, 1400 / max(h, w))
+    sample = (cv2.resize(image, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
+              if scale < 1 else image)
+    gray = cv2.cvtColor(sample, cv2.COLOR_BGR2GRAY)
+    ink = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
+    sh, sw = ink.shape
+    rules = cv2.bitwise_or(
+        cv2.morphologyEx(ink, cv2.MORPH_OPEN, np.ones((1, max(40, sw // 12)), np.uint8)),
+        cv2.morphologyEx(ink, cv2.MORPH_OPEN, np.ones((max(40, sh // 12), 1), np.uint8)),
+    )
+    ink = cv2.bitwise_and(ink, cv2.bitwise_not(rules))
+    count, labels, stats, _ = cv2.connectedComponentsWithStats(ink)
+    heights = [bh for _, _, bw, bh, area in stats[1:]
+               if 4 <= bh <= 60 and 2 <= bw <= bh * 3 and 8 <= area <= 2200]
+    if len(heights) < 10:
+        return None
+    char_height = float(np.median(heights))
+    keep = np.zeros(count, np.uint8)
+    for index, (_, _, bw, bh, area) in enumerate(stats[1:], 1):
+        if (.45 * char_height <= bh <= 2.5 * char_height
+                and 1 <= bw <= char_height * 6 and area >= 6
+                and area / (bw * bh) > .06):
+            keep[index] = 255
+    text = keep[labels]
+    connected = cv2.morphologyEx(
+        text, cv2.MORPH_CLOSE,
+        np.ones((max(1, round(char_height * .12)), max(5, round(char_height * .8))), np.uint8),
+    )
+    contours, _ = cv2.findContours(connected, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    votes: list[tuple[float, float, float, float]] = []
+    for contour in contours:
+        _, _, bw, bh = cv2.boundingRect(contour)
+        if (bw < max(35, char_height * 3.5) or bh > char_height * 3
+                or bh < char_height * .5 or bw / bh < 3):
+            continue
+        rect = cv2.minAreaRect(contour)
+        box = cv2.boxPoints(rect)
+        edges = np.roll(box, -1, axis=0) - box
+        dx, dy = edges[np.argmax(np.sum(edges ** 2, axis=1))]
+        # Use the long edge geometry, not minAreaRect's version-dependent angle
+        # convention. Image y points down, so positive means clockwise.
+        angle = (math.degrees(math.atan2(float(dy), float(dx))) + 90) % 180 - 90
+        if abs(angle) <= 12:
+            votes.append((angle, rect[0][0], rect[0][1], float(bw)))
+    if len(votes) < 5:
+        return None
+    values = np.array(votes)
+    weights = np.minimum(values[:, 3], np.median(values[:, 3]) * 2)
+    order = np.argsort(values[:, 0])
+    middle = np.searchsorted(np.cumsum(weights[order]), weights.sum() / 2)
+    angle = float(values[order[middle], 0])
+    supporters = np.abs(values[:, 0] - angle) <= .55
+    if weights[supporters].sum() / weights.sum() < .80 or supporters.sum() < 5:
+        return None
+    # Word fragments on the same sloping line still constitute just one row.
+    # Remove their x-dependent slope before counting distinct text baselines.
+    rows = sorted(values[supporters, 2] - math.tan(math.radians(angle)) * values[supporters, 1])
+    distinct = [rows[0]]
+    for y in rows[1:]:
+        if y - distinct[-1] >= char_height * 1.4:
+            distinct.append(y)
+    if len(distinct) < 3:
+        return None
+    return angle
+
+
 def deskew(image: np.ndarray) -> tuple[np.ndarray, float]:
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    inv = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
-    coords = np.column_stack(np.where(inv > 0))
-    if len(coords) < 100:
-        return image, 0.0
-    angle = cv2.minAreaRect(coords[:, ::-1].astype(np.float32))[-1]
-    angle = -(90 + angle) if angle < -45 else -angle
-    if abs(angle) > 12 or abs(angle) < 0.15:
+    """Conservatively correct verified text skew; otherwise return the original."""
+    angle = _text_skew_angle(image)
+    if angle is None or not .6 <= abs(angle) <= 8:
         return image, 0.0
     h, w = image.shape[:2]
-    matrix = cv2.getRotationMatrix2D((w / 2, h / 2), angle, 1.0)
-    return cv2.warpAffine(
-        image, matrix, (w, h), flags=cv2.INTER_CUBIC,
-        borderMode=cv2.BORDER_REPLICATE,
-    ), angle
+    matrix = cv2.getRotationMatrix2D(((w - 1) / 2, (h - 1) / 2), angle, 1.0)
+    cosine, sine = abs(matrix[0, 0]), abs(matrix[0, 1])
+    new_width = math.ceil(w * cosine + h * sine)
+    new_height = math.ceil(h * cosine + w * sine)
+    matrix[0, 2] += (new_width - w) / 2
+    matrix[1, 2] += (new_height - h) / 2
+    candidate = cv2.warpAffine(
+        image, matrix, (new_width, new_height), flags=cv2.INTER_CUBIC,
+        borderMode=cv2.BORDER_CONSTANT, borderValue=(255, 255, 255),
+    )
+    # Re-estimate on the actual saved image. Ambiguous or unimproved results
+    # never replace a good original; no second corrective rotation is applied.
+    after = _text_skew_angle(candidate)
+    if after is None or abs(after) > .35 or abs(after) >= abs(angle) * .5:
+        return image, 0.0
+    return candidate, angle
 
 
 def _quality_metrics(image: np.ndarray) -> tuple[float, float]:

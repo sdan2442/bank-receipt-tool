@@ -11,6 +11,7 @@ build/
 dist/
 snapshots/
 release/
+tmp/
 
 # Bundled models are distributed only inside the verified binary release asset
 models/

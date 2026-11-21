@@ -6,9 +6,9 @@
 
 **普通使用者无需安装 Python，无需另外下载 OCR 模型。**
 
-1. 打开 [Windows 离线包下载页](https://github.com/sdan2442/bank-receipt-tool/releases/tag/v0.3.10-preview)。
-2. 在 Assets 中下载 `BankReceiptTool_v0.3.10_windows_x64.zip`。`source`、`ThirdPartySources`、`qt-everywhere-src` 是供开发者查阅的源码附件，使用程序无需下载。
-3. 将 ZIP 完整解压到所有父目录均为英文或数字的路径，例如 `D:\BankReceiptTool_v0_3_10`。不要在压缩包内直接运行。
+1. 打开 [Windows 离线包下载页](https://github.com/sdan2442/bank-receipt-tool/releases/tag/v0.3.11-preview)。
+2. 在 Assets 中下载 `BankReceiptTool_v0.3.11_windows_x64.zip`。`source`、`ThirdPartySources`、`qt-everywhere-src` 是供开发者查阅的源码附件，使用程序无需下载。
+3. 将 ZIP 完整解压到所有父目录均为英文或数字的路径，例如 `D:\BankReceiptTool_v0_3_11`。不要在压缩包内直接运行。
 4. 双击 `银行回单工具.exe`，保留同目录的 `_internal` 文件夹。首次启动也可离线使用。
 5. 使用方法见 [中文使用说明](README_使用说明.md)。默认结果保存到桌面的“银行回单处理结果”。
 
@@ -16,7 +16,9 @@ Windows 包包含 Python 运行环境、四个本地 PP-OCRv5 模型、配置和
 
 ## 公开测试版
 
-当前应用版本为 v0.3.10，默认使用双 mobile 模型，结果进入人工复核。上下布局发票的购买方标签被拆字时可能留空，详情见 RELEASE_NOTES.md。
+当前应用版本为 v0.3.11，默认使用双 mobile 模型，结果进入人工复核。上下布局发票的购买方标签被拆字时可能留空，详情见 RELEASE_NOTES.md。
+
+v0.3.11 修复了“原页较正、处理后反而变歪”的小角度纠偏问题。仅在多行文字方向一致且校正后确实更水平时采用旋转，证据不足保留原图；旋转画布扩展并补白，避免裁掉页边内容。90°/180°方向识别保持独立。已生成的旧 PDF 不会自动改变，请从原件重新处理对应页，并保留旧结果。
 
 源码以 AGPL-3.0 发布，第三方组件按各自许可证使用。安装与模型下载在开发准备阶段进行，应用处理业务单据时使用本地模型。许可证全文见 LICENSE，依赖清单和对应源码说明见 THIRD_PARTY_NOTICES.md。
 
@@ -114,7 +116,7 @@ output/
 .\build.ps1
 ```
 
-输出为 `dist\BankReceiptTool_v0_3_10\银行回单工具.exe`。这是 PyInstaller 目录包，`models/`、`config/`、Paddle/PaddleOCR、PySide6 和 Python 运行库会一并收集。请将整个目录解压到纯英文路径（如 `D:\BankReceiptTool_v0_3_10`），首次启动无需联网。
+输出为 `dist\BankReceiptTool_v0_3_11\银行回单工具.exe`。这是 PyInstaller 目录包，`models/`、`config/`、Paddle/PaddleOCR、PySide6 和 Python 运行库会一并收集。请将整个目录解压到纯英文路径（如 `D:\BankReceiptTool_v0_3_11`），首次启动无需联网。
 
 ## 测试
 

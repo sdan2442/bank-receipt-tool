@@ -15,7 +15,7 @@ PRIVATE_SUFFIXES = {
 }
 SOURCE_EXCLUDES = {
     ".git", ".venv", ".python311", "__pycache__", ".pytest_cache",
-    ".cache", "build", "dist", "models", "snapshots", "release",
+    ".cache", "build", "dist", "models", "snapshots", "release", "tmp",
 }
 TEXT_SUFFIXES = {".py", ".md", ".yaml", ".yml", ".json", ".toml", ".ps1", ".txt"}
 LOCAL_PATH = re.compile(r"[A-Za-z]:\\Users\\[^\\\r\n]+", re.IGNORECASE)

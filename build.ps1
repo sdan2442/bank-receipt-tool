@@ -11,7 +11,7 @@ if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 & .\.venv\Scripts\pyinstaller.exe --noconfirm --clean BankReceiptTool.spec
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-$Dist = Join-Path $Root 'dist\BankReceiptTool_v0_3_10'
+$Dist = Join-Path $Root 'dist\BankReceiptTool_v0_3_11'
 Get-ChildItem -File -Filter 'README*.md' | Copy-Item -Destination $Dist
 Copy-Item -LiteralPath 'LICENSE' -Destination $Dist
 Copy-Item -LiteralPath 'NOTICE','THIRD_PARTY_NOTICES.md','RELEASE_NOTES.md','SOURCE_CODE.md' -Destination $Dist

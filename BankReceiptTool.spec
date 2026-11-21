@@ -28,4 +28,4 @@ a.binaries = [entry for entry in a.binaries
               if not Path(entry[0]).name.lower().startswith('opencv_videoio_ffmpeg')]
 exe = EXE(pyz, a.scripts, [], exclude_binaries=True, name='银行回单工具', debug=False,
     bootloader_ignore_signals=False, strip=False, upx=False, console=False)
-coll = COLLECT(exe, a.binaries, a.datas, strip=False, upx=False, name='BankReceiptTool_v0_3_10')
+coll = COLLECT(exe, a.binaries, a.datas, strip=False, upx=False, name='BankReceiptTool_v0_3_11')

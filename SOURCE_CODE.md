@@ -4,15 +4,15 @@
 
 ## 本次发行对应源码
 
-[v0.3.10 测试版 Release](https://github.com/sdan2442/bank-receipt-tool/releases/tag/v0.3.10-preview) 同时提供以下附件。SHA-256 见同页 `SHA256SUMS_v0.3.10_preview.txt`。
+[v0.3.11 测试版 Release](https://github.com/sdan2442/bank-receipt-tool/releases/tag/v0.3.11-preview) 提供本次应用源码与 Windows 包，SHA-256 见同页 `SHA256SUMS_v0.3.11_preview.txt`。第三方库与模型版本保持不变，其对应源码继续由 [v0.3.10 Release](https://github.com/sdan2442/bank-receipt-tool/releases/tag/v0.3.10-preview) 提供，校验值见该页 `SHA256SUMS_v0.3.10_preview.txt`。使用程序无需额外下载这些源码附件。
 
 | 附件 | 内容 |
 | --- | --- |
-| `BankReceiptTool_v0.3.10_source.zip` | 本应用源码、配置、测试、开发安装脚本与 PyInstaller 打包脚本 |
+| `BankReceiptTool_v0.3.11_source.zip` | 本次应用源码、配置、测试、开发安装脚本与 PyInstaller 打包脚本，位于 v0.3.11 Release |
 | `ThirdPartySources_v0.3.10.zip` | PyMuPDF 1.26.4、MuPDF 1.26.7、PySide6/Shiboken 6.9.2、GEOS 3.13.1、Shapely 2.1.2、crc32c 2.9、python-bidi 0.6.11、certifi 2026.7.22、tqdm 4.70.0 官方源码包 |
 | `qt-everywhere-src-6.9.2.tar.xz` | Qt 6.9.2 完整官方源码，包含本次收集的 Qt 模块及其第三方源码与许可 |
 
-第三方归档保持上游原样，其 URL、版本、字节数和 SHA-256 记录在 `licenses/upstream_sources.json`。构建环境包版本及原始许可文件索引位于 `licenses/third_party_manifest.json`。本次 Windows 包使用 Python 3.11.9、PyInstaller 6.16.0，应用功能代码与 v0.3.10 构建一致。
+第三方归档保持上游原样，其 URL、版本、字节数和 SHA-256 记录在 `licenses/upstream_sources.json`。构建环境包版本及原始许可文件索引位于 `licenses/third_party_manifest.json`。本次 Windows 包使用 Python 3.11.9、PyInstaller 6.16.0，应用版本为 v0.3.11。
 
 ## 构建入口
 
